@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/news_category', [NewsCategoryController::class, 'index'])->name('news-category.index');
     Route::post('/news_category_save', [NewsCategoryController::class, 'save'])->name('news-category.save');
+    Route::delete('/news_category_delete', [NewsCategoryController::class, 'delete'])->name('news-category.delete');
 });
 
 require __DIR__.'/auth.php';
