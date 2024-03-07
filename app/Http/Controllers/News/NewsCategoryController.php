@@ -13,8 +13,8 @@ class NewsCategoryController extends Controller
 {
     public function index(Request $request) {
         $search = $request->get('search');
-        $categories = NewsCategory::query()->
-            when($search, function($query, $search) {
+        $categories = NewsCategory::query()
+            ->when($search, function($query, $search) {
                 $query->where('name', 'like', '%' . $search . '%');
             })
             ->orderByDesc('id')->paginate(10)->through(function ($item) {
