@@ -17,7 +17,9 @@ class NewsCategoryController extends Controller
             ->when($search, function($query, $search) {
                 $query->where('name', 'like', '%' . $search . '%');
             })
-            ->orderByDesc('id')->paginate(10)->through(function ($item) {
+            ->orderByDesc('id')
+            ->paginate(10)
+            ->through(function ($item) {
                 return [
                     'id' => $item->id,
                     'name' => $item->name,

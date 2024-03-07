@@ -53,6 +53,7 @@ const openModal = (act, id = '', name = '') => {
 const closeModal = () => {
     isShow.value = false;
     form.reset();
+    form.clearErrors();
 }
 const handleSubmit = () => {
     if(modalInfo.value.action === 'add' || modalInfo.value.action === 'edit') {
