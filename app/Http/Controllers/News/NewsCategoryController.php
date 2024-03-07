@@ -12,13 +12,14 @@ use Inertia\Inertia;
 class NewsCategoryController extends Controller
 {
     public function index(Request $request) {
-        $search = $request->get('search');
+        $search = $request->get('search', '');
         $categories = NewsCategory::query()
             ->when($search, function($query, $search) {
                 $query->where('name', 'like', '%' . $search . '%');
             })
             ->orderByDesc('id')
             ->paginate(10)
+            ->withQueryString()
             ->through(function ($item) {
                 return [
                     'id' => $item->id,
@@ -27,6 +28,7 @@ class NewsCategoryController extends Controller
             });
         return Inertia::render('NewsCategory/Index', [
             'categories' => $categories,
+            'search' => $search
         ]);
     }
 
@@ -37,16 +39,18 @@ class NewsCategoryController extends Controller
             NewsCategory::create([
                 'name' => $name
             ]);
+            return Redirect::route('news-category.index');
         } else {
             NewsCategory::where('id', $id)
                 ->update(['name' => $name]);
+            return Redirect::back();
         }
-        return Redirect::route('news-category.index');
     }
 
     public function delete(NewsCategoryRequest $request) {
+        $search = $request->get('search', '');
         $id = $request->get('id');
         NewsCategory::findOrFail($id)->delete();
-        return Redirect::route('news-category.index');
+        return Redirect::back();
     }
 }

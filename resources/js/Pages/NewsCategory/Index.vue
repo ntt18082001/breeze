@@ -12,15 +12,18 @@ import InputError from "@/Components/InputError.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import debounce from 'lodash.debounce';
 
-defineProps({
+const props = defineProps({
   categories: {
     type: Object,
+  },
+  search: {
+    type: String,
   }
 });
 
 const isShow = ref(false);
 const nameInput = ref(null);
-const searchTerm = ref('');
+const searchTerm = ref(props.search);
 const modalInfo = ref({
     action: 'add',
     title: 'Add new category',
@@ -84,6 +87,9 @@ const changeAction = (act) => {
         modalInfo.value.title = 'Delete category';
     }
 }
+const resetFormSearch = () => {
+  searchTerm.value = '';
+}
 </script>
 
 <template>
@@ -98,7 +104,7 @@ const changeAction = (act) => {
                     <div class="p-6 text-gray-900">
                         <div class="flex justify-between items-end">
                             <primary-button @click="openModal('add')">Add new category</primary-button>
-                            <div class="w-2/4">
+                            <div class="w-2/4 flex items-center gap-2">
                                 <TextInput
                                         id="search"
                                         type="text"
@@ -107,6 +113,11 @@ const changeAction = (act) => {
                                         name="search"
                                         v-model="searchTerm"
                                 />
+                                <primary-button @click="resetFormSearch">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-6">
+                                      <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                                    </svg>
+                                </primary-button>
                             </div>
                         </div>
                         <div class="border mt-4">
