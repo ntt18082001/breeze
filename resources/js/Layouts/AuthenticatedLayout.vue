@@ -35,7 +35,7 @@ const showingNavigationDropdown = ref(false);
                             </div>
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink :href="route('news-category.index')" :active="route().current('news-category.index')">
-                                    News
+                                    Category
                                 </NavLink>
                             </div>
                         </div>

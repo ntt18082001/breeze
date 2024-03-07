@@ -26,8 +26,7 @@ const modalInfo = ref({
     title: 'Add new category',
 });
 
-watch(searchTerm, debounce((value) => {
-  console.log(value);
+watch(searchTerm, debounce(() => {
   router.get(route('news-category.index'), {
     search: searchTerm.value
   }, {
